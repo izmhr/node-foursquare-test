@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script>
+$(function(){
+  $("#test").on("click", function(event){
+    event.preventDefault();
+    // Consumer(Node.js)が用意した、4sqのAPIを叩くための関数(ページ)をリクエストする
+    // 同じドメインからなので普通にjsonを受け取る事が出来る
+    $.getJSON("/Users/self/getVenueHistory", function(json){
+      $("#testresult").text(JSON.stringify(json, null, "  "));
+      console.log(json);
+    });
+  });  
+});
+  </script>
+</head>
+<body>
+  <h1><%= title %></h1>
+  <% if(result!==""){ %>
+  <p>Hi <%= result.user.firstName + " " + result.user.lastName%> </p>
+  <a href="/Users/getUser/self"><p>get my profile</p></a>
+  <a href="/Users/self/getVenueHistory"><p>get my venues</p></a>
+  <a href="" id="test"><p>get my venues as JSON object (by jQuery)</p></a>
+  <pre id="testresult"></pre>
+  <% }else{ %>
+  <a href="/login"><img src="images/connect-white.png" id="login"></a>
+  <% } %>
+</body>
+</html>
